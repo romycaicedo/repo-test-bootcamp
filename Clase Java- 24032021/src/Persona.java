@@ -29,7 +29,17 @@ public class Persona implements Precedable<Persona>{
 
     @Override
     public int precedeA(Persona persona) {
-
         return this.dni-persona.dni;
+
     }
+
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "nombre='" + nombre + '\'' +
+                ", dni=" + dni +
+                '}';
+    }
+
+
 }
