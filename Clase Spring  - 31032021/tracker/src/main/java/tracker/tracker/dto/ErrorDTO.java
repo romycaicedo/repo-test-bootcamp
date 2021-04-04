@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LinkDto {
-    public String contraseña;
-    public int id;
-    public String url;
-    public int metric;
-}
+public class ErrorDTO {
+        public String name;
+        public String message;
+    }
+
+

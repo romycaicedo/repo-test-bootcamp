@@ -12,8 +12,8 @@ public class LinkRepositoryImpl implements LinkRepository{
     HashMap<Integer,LinkDto> linkDtos = new HashMap<Integer,LinkDto>();
     int contador = 0;
     @Override
-    public LinkDto agregarDatos(String link){
-        LinkDto linkDto = new LinkDto("",contador,link);
+    public LinkDto agregarDatos(String link, String pwd){
+        LinkDto linkDto = new LinkDto(pwd,contador,link,0);
         linkDtos.put(linkDto.id, linkDto);
         contador++;
         return linkDto;
