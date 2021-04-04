@@ -1,14 +1,16 @@
 package calorias.controllers;
 
-import calorias.dto.PlatoComida;
+
+import calorias.dto.PlatoComidaDTO;
 import calorias.dto.ResponseDto;
 import calorias.exceptions.IngredientNotFoundException;
-import calorias.services.CalculadoraService;
 import calorias.services.CalculadoraServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class CalculadoraController {
@@ -16,10 +18,12 @@ public class CalculadoraController {
     private CalculadoraServiceImpl calculadora ;
 
     @PostMapping("/calcular")
-    public ResponseDto calcularCalorias(@RequestBody PlatoComida plato) throws IngredientNotFoundException {
-
-     return calculadora.getResponse(plato);
+    public ResponseDto calcularCalorias(@RequestBody PlatoComidaDTO plato) throws IngredientNotFoundException {
+        return calculadora.calcularCalorias(plato);
     }
 
-    public ResponseDto
+    @PostMapping("/calcularPlato")
+    public List<ResponseDto> calculate(@RequestBody List<PlatoComidaDTO> platosList) throws IngredientNotFoundException {
+        return calculadora.calcularAll(platosList);
+    }
 }
