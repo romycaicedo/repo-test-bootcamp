@@ -12,17 +12,18 @@ public class Main {
         prenda.add(prenda2);
         GuardaRopa gr = new GuardaRopa();
         gr.guardarPrendas(prenda);
-
         Prenda prenda3 = new Prenda("SHEIN", "Jeans");
         Prenda prenda4 = new Prenda("HM","chaqueta");
         List<Prenda> prendas2 = new
                 ArrayList<>();
-        prendas2.add(prenda1);
-        prendas2.add(prenda2);
+        prendas2.add(prenda3);
+        prendas2.add(prenda4);
 
         gr.guardarPrendas(prendas2);
-        //gr.devolverPrendas(gr.dic.keys().nextElement());
         gr.mostrarPrendas();
+        gr.devolverPrendas(1);
+        gr.mostrarPrendas();
+        
 
 
     }
