@@ -23,7 +23,7 @@ public class Main {
         gr.mostrarPrendas();
         gr.devolverPrendas(1);
         gr.mostrarPrendas();
-        
+
 
 
     }
