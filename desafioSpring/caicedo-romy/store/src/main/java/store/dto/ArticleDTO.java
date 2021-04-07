@@ -1,7 +1,10 @@
 package store.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Required;
 
 
 @Data
@@ -9,22 +12,39 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class ArticleDTO {
-    @JsonProperty("Producto")
+    @JsonProperty("productId")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonAlias("Producto")
     public Integer productId;
-    @JsonProperty("Nombre")
+    @JsonProperty("name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonAlias("Nombre")
     public String name;
-    @JsonProperty("Categoria")
+    @JsonProperty("category")
+    @JsonAlias("Categoria")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String category;
-    @JsonProperty("Marca")
+    @JsonProperty("brand")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonAlias("Marca")
     public String brand;
-    @JsonProperty("Precio")
+    @JsonProperty("price")
+    @JsonAlias("Precio")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String price;
-    @JsonProperty("Cantidad")
+    @JsonProperty("quantity")
+    @JsonAlias("Cantidad")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public double quantity;
-    @JsonProperty("Envio Gratis")
+    @JsonAlias("Envio Gratis")
+    @JsonProperty("free_shipping")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String freeShipping;
-    @JsonProperty("Prestigio")
+    @JsonProperty("prestige")
+    @JsonAlias("Prestigio")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String prestige;
 
 
