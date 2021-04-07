@@ -3,14 +3,13 @@ package store.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.util.Comparator;
 
 @Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArticleDTO implements Comparable<ArticleDTO> {
+public class ArticleDTO {
     @JsonProperty("Producto")
     public Integer productId;
     @JsonProperty("Nombre")
@@ -29,28 +28,6 @@ public class ArticleDTO implements Comparable<ArticleDTO> {
     public String prestige;
 
 
-    public enum SortParameter {
-        NAME_SORT, PRICE_SORT
-    }
 
-
-    @Override
-        int comparison;
-        for (SortParameter parameter : parameters) {
-            switch (parameter) {
-                case NAME_SORT:
-                    comparison = getName().compareTo(o.getName());
-                    if (comparison != 0) return comparison;
-                    break;
-                case PRICE_SORT:
-                    comparison = getPrice().compareTo(o.getPrice());
-                    if (comparison != 0) return comparison;
-                    break;
-
-            }
-
-        }
-        return 0;
-    }
 
 }

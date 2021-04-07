@@ -4,6 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
+import store.comparators.AscendingComparator;
+import store.comparators.AscendingPriceComparator;
+import store.comparators.DescendingComparator;
+import store.comparators.DescendingPriceComparator;
 import store.dto.ArticleDTO;
 
 import java.io.File;
@@ -40,7 +44,7 @@ public class ArticleRepositoryImpl implements ArticleRepository{
         }
         if(params.containsKey("minPrice") && params.containsKey("maxPrice")){
 
-            lists1.add(articleDTOS.stream().filter(articleDTO -> matchWithPriceRange(Double.parseDouble(params.get("minPrice")),Double.parseDouble(params.get("maxPrice")),articleDTO)).collect(Collectors.toList()));
+            lists1.add(articleDTOS.stream().filter(articleDTO -> matchWithPriceRange(Double.parseDouble(params.get("minPrice").replace(".","")),Double.parseDouble(params.get("maxPrice").replace(".","")),articleDTO)).collect(Collectors.toList()));
         }
         if (params.containsKey("freeShipping")){
             lists1.add(articleDTOS.stream().filter(articleDTO -> matchWithFreeShipping(Boolean.parseBoolean(params.get("freeShipping")),articleDTO)).collect(Collectors.toList()));
@@ -59,15 +63,20 @@ public class ArticleRepositoryImpl implements ArticleRepository{
         total = result.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting())).entrySet().stream().filter(articleDTOLongEntry -> articleDTOLongEntry.getValue()>lists1.size()-1).map(articleDTOLongEntry -> articleDTOLongEntry.getKey()).collect(Collectors.toList());
         if(params.containsKey("order"))
             if(params.get("order").equals("0"))
-             Collections.sort(total);
+             total.sort(new AscendingComparator());
+            else if (params.get("order").equals("1")){
+                total.sort(new DescendingComparator());
+            } else if(params.get("order").equals("2")){
+                total.sort(new AscendingPriceComparator());
+            } else if (params.get("order").equals("3")){
+                total.sort(new DescendingPriceComparator());
+            }
 
-            else
-                Collections.sort(total,Collections.reverseOrder());
 
         return total;
     }
     private double removeCharacters(String precio){
-        Double precioFinal = Double.parseDouble(precio.replace("$", ""));
+        Double precioFinal = Double.parseDouble(precio.replace("$", "").replace(".",""));
         return precioFinal;
     }
 
@@ -81,7 +90,7 @@ public class ArticleRepositoryImpl implements ArticleRepository{
     }
     private boolean matchWithPriceRange(double query1, double query2,ArticleDTO articleDTO) {
         boolean is ;
-        if(removeCharacters(articleDTO.getPrice()) >query1 && removeCharacters(articleDTO.getPrice())<query2)
+        if(removeCharacters(articleDTO.getPrice()) >= query1 && removeCharacters(articleDTO.getPrice())<=query2)
             is = true;
         else
             is = false;
