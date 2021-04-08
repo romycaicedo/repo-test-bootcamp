@@ -9,7 +9,7 @@ import store.comparators.AscendingPriceComparator;
 import store.comparators.DescendingComparator;
 import store.comparators.DescendingPriceComparator;
 import store.dto.ArticleDTO;
-import store.dto.PurchaseDTO;
+import store.exceptions.ArticleNotFoundException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,6 +31,22 @@ public class ArticleRepositoryImpl implements ArticleRepository{
     public List<ArticleDTO> getByCategory(String category) {
         List<ArticleDTO> articleDTOS = loadDataBase();
         return articleDTOS.stream().filter(articleDTO -> matchWithCategory(category,articleDTO)).collect(Collectors.toList());
+
+    }
+        @Override
+        public ArticleDTO getById(int id) throws ArticleNotFoundException {
+        List<ArticleDTO> articleDTOS = loadDataBase();
+        ArticleDTO dto = new ArticleDTO();
+        for(int i =0; i<articleDTOS.size();i++){
+            if(articleDTOS.get(i).getProductId().equals(id)){
+                dto = articleDTOS.get(i);
+            }
+        }
+        if(dto.getProductId()==null){
+            throw new ArticleNotFoundException("El Articulo con el id "+ id+ " no existe" );
+        }
+
+        return dto;
 
     }
     @Override
@@ -79,44 +95,23 @@ public class ArticleRepositoryImpl implements ArticleRepository{
 
         return total;
     }
-    @Override
-    public List<ArticleDTO> stockQuery(List<ArticleDTO>  articleDTOList){
-        List<ArticleDTO> articleDTOS = loadDataBase();
-        List<ArticleDTO> result = new ArrayList<>();
-        for (ArticleDTO dto : articleDTOList){
-            result =  articleDTOS.stream().filter(articleDTO -> findStock(dto.getQuantity(),dto.getProductId(),articleDTO)).collect(Collectors.toList());
-        }
-        return result;
-    }
-    @Override
-    public List<ArticleDTO> articleQuery(List<ArticleDTO> articleDTO){
-        List<ArticleDTO> articleDTOS = loadDataBase();
-        List<ArticleDTO> result = new ArrayList<>();
-        for (ArticleDTO dto : articleDTO){
-            result =  articleDTOS.stream().filter(articleDTO1 -> matchByName(dto.getName(),articleDTO1)).collect(Collectors.toList());
-        }
-        return result;
-    }
 
 
-    public boolean matchByName(String name, ArticleDTO articleDTO){
-        boolean is = articleDTO.getName().toUpperCase().contains(name.toUpperCase());
+
+    public boolean matchById(int id, ArticleDTO articleDTO){
+        boolean is = articleDTO.getProductId().equals(id);
         return is;
     }
 
-    public boolean findStock (double quantity, Integer productId,ArticleDTO articleDTO){
-        boolean is = (articleDTO.getQuantity() >= quantity && articleDTO.getProductId() == productId);
-        return is;
-    }
 
-    public double totalPurchase (List<ArticleDTO> articleDTOList){
+
+    public double totalPurchase (List<ArticleDTO> articleDTOList) throws ArticleNotFoundException {
         double price = 0;
         List<ArticleDTO> articleDTOS = loadDataBase();
         List<ArticleDTO> precios = new ArrayList<>();
         Map<Double,Double> valores = new HashMap<>();
-        //List<Double> operar = new ArrayList<>();
-        for(ArticleDTO dto: articleDTOList) {
-            precios = articleDTOS.stream().filter(articleDTO -> matchByName(dto.getName(), articleDTO)).collect(Collectors.toList());
+        for(int i = 0; i<articleDTOList.size();i++) {
+             precios.add(getById(articleDTOList.get(i).getProductId()));
         }
         for(ArticleDTO dtoList : articleDTOList){
             for (ArticleDTO dto : precios){

@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PurchaseDTO {
-    public TicketDTO ticketDTO;
-    public StatusDTO statusDTO;
+    public TicketDTO ticket;
+    public StatusDTO status;
 }

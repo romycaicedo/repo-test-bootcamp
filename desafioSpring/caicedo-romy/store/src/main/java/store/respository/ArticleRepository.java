@@ -1,6 +1,7 @@
 package store.respository;
 
 import store.dto.ArticleDTO;
+import store.exceptions.ArticleNotFoundException;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -12,8 +13,7 @@ public interface ArticleRepository {
     List<ArticleDTO> getByCategory(String category);
     List<ArticleDTO> getByFilters(Map<String,String> params);
     boolean modifyStock(List<ArticleDTO> articles) throws FileNotFoundException;
-    List<ArticleDTO> stockQuery(List<ArticleDTO>  articleDTOList);
-    List<ArticleDTO> articleQuery(List<ArticleDTO> articleDTO);
-    double totalPurchase (List<ArticleDTO> articleDTOList);
+    double totalPurchase (List<ArticleDTO> articleDTOList) throws ArticleNotFoundException;
+    ArticleDTO getById(int id) throws ArticleNotFoundException;
 
 }

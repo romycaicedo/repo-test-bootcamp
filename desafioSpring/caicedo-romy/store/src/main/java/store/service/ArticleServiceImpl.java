@@ -6,10 +6,12 @@ import store.dto.ArticleDTO;
 import store.dto.PurchaseDTO;
 import store.dto.StatusDTO;
 import store.dto.TicketDTO;
+import store.exceptions.ArticleNotFoundException;
+import store.exceptions.StockOutOfBoundsException;
 import store.respository.ArticleRepository;
 
 
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +20,10 @@ import java.util.Map;
 public class ArticleServiceImpl implements  ArticleService{
     @Autowired
     private ArticleRepository articleRepository;
+
+    List<ArticleDTO> stock = new ArrayList<>();
+    int counter = 1;
+
     public List<ArticleDTO> getAll(){
         return articleRepository.getAll();
     }
@@ -32,56 +38,40 @@ public class ArticleServiceImpl implements  ArticleService{
         return articleRepository.getByFilters(params);
     }
 
-    public PurchaseDTO purchaseRequest(List<ArticleDTO> articleDTOList)  {
+    public PurchaseDTO purchaseRequest(List<ArticleDTO> articleDTOList) throws ArticleNotFoundException, StockOutOfBoundsException {
         PurchaseDTO purchase = new PurchaseDTO();
         TicketDTO ticketDTO = new TicketDTO();
         StatusDTO statusDTO = new StatusDTO();
 
-        List<ArticleDTO> stock = articleRepository.stockQuery(articleDTOList);
-
-            if(articleRepository.articleQuery(articleDTOList)!= null)
-            {
-                if(stock != null && stock.size() !=0 && stock.size() == articleDTOList.size()){
-                    ticketDTO.setArticles(articleDTOList);
-                    ticketDTO.setId(1);
-                    double total = articleRepository.totalPurchase(articleDTOList);
-                    ticketDTO.setTotal(total);
-                    statusDTO.setCode(200);
-                    statusDTO.setMessage("La solicitud se completó con exito");
-                    purchase.setTicketDTO(ticketDTO);
-                    purchase.setStatusDTO(statusDTO);
-                    //articleRepository.modifyStock(articleDTOList);
-                }
-                else {
-                    statusDTO.setCode(400);
-                    if (stock == null || stock.size()==0) {
-                        statusDTO.setMessage("No hay stock de los articulos ingresados");
-                    purchase.setStatusDTO(statusDTO);
-                    } else
-                        statusDTO.setCode(400);
-                    for (ArticleDTO dto : articleDTOList) {
-                        if (!stock.contains(dto)) {
-                            statusDTO.setMessage("El stock no es suficiente para el producto:" + dto.getName() + " las unidade actuiales son " + dto.getQuantity() + " porfavor modifica tu solicitud de compra");
-                        }
-                        break;
-
-                    }
-
-                    purchase.setStatusDTO(statusDTO);
-
-
-                }
-
+        for(int i= 0; i<articleDTOList.size();i++){
+            stock.add(articleRepository.getById(articleDTOList.get(i).getProductId()));
+        }
+            if (stock.size() != 0 || stock != null) {
+                validateStock(articleDTOList);
+                ticketDTO.setArticles(articleDTOList);
+                ticketDTO.setId(counter);
+                double total = articleRepository.totalPurchase(articleDTOList);
+                ticketDTO.setTotal(total);
+                statusDTO.setCode(200);
+                statusDTO.setMessage("La solicitud se completó con exito");
+                purchase.setTicket(ticketDTO);
+                purchase.setStatus(statusDTO);
+                counter++;
+                //articleRepository.modifyStock(articleDTOList);
             } else {
-                purchase.statusDTO.setCode(404);
-                for (ArticleDTO dto : articleDTOList) {
-                    if (articleRepository.articleQuery(articleDTOList).contains(dto)) {
-                        purchase.statusDTO.setMessage("El producto " + dto.getName() + " no existe, porfavor modifca tu solicitud ");
-                    }
-                    break;
-                }
+                throw new StockOutOfBoundsException("Los articulos solcitados se encuentran agotados");
+
             }
+
         return purchase;
+    }
+
+    private void validateStock( List<ArticleDTO> articleDTOList) throws  StockOutOfBoundsException {
+        for(int i = 0; i<articleDTOList.size();i++) {
+            if (stock.get(i).getQuantity() < articleDTOList.get(i).getQuantity()) {
+                throw new StockOutOfBoundsException("El Articulo " + articleDTOList.get(i).getName() + " cuenta solo con " + stock.get(i).getQuantity() + " unidades , por favor modifica tu pedido" );
+            }
+        }
     }
 
 

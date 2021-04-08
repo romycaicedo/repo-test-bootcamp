@@ -5,6 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import store.dto.ArticleDTO;
+import store.dto.StatusDTO;
+import store.exceptions.ArticleNotFoundException;
+import store.exceptions.StockOutOfBoundsException;
 import store.service.ArticleService;
 
 import java.io.FileNotFoundException;
@@ -31,9 +34,25 @@ public class ArticleController {
 
     }
     @PostMapping("/api/v1/purchase-request")
-    public ResponseEntity purchaseRequest(@RequestBody List<ArticleDTO> articleDTOList) throws FileNotFoundException {
+    public ResponseEntity purchaseRequest(@RequestBody List<ArticleDTO> articleDTOList) throws FileNotFoundException, ArticleNotFoundException, StockOutOfBoundsException {
         return new ResponseEntity(service.purchaseRequest(articleDTOList), HttpStatus.OK);
 
+    }
+    @ExceptionHandler(ArticleNotFoundException.class)
+    public ResponseEntity badUrlSent(ArticleNotFoundException n)
+    {
+        StatusDTO error= new StatusDTO();
+        error.setCode(404);
+        error.setMessage(n.getMessage());
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(StockOutOfBoundsException.class)
+    public ResponseEntity stockError(StockOutOfBoundsException n)
+    {
+        StatusDTO error= new StatusDTO();
+        error.setCode(404);
+        error.setMessage(n.getMessage());
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
 
 
