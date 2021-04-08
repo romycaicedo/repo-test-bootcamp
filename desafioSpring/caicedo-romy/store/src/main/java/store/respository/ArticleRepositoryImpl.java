@@ -10,6 +10,7 @@ import store.comparators.DescendingComparator;
 import store.comparators.DescendingPriceComparator;
 import store.dto.ArticleDTO;
 import store.exceptions.ArticleNotFoundException;
+import store.exceptions.StockOutOfBoundsException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -104,7 +105,7 @@ public class ArticleRepositoryImpl implements ArticleRepository{
     }
 
 
-
+// Metodo que calcula el total de una solicitud de compra
     public double totalPurchase (List<ArticleDTO> articleDTOList) throws ArticleNotFoundException {
         double price = 0;
         List<ArticleDTO> articleDTOS = loadDataBase();
@@ -127,12 +128,12 @@ public class ArticleRepositoryImpl implements ArticleRepository{
 
 
 
-
+//Metodo para remover caracteres del precio
     private double removeCharacters(String precio){
         Double precioFinal = Double.parseDouble(precio.replace("$", "").replace(".",""));
         return precioFinal;
     }
-
+//Metodos para consultas especificas
     private boolean matchWithCategory(String query, ArticleDTO articleDTO) {
         boolean is = articleDTO.getCategory().toUpperCase().contains(query.toUpperCase());
         return is;
@@ -158,7 +159,7 @@ public class ArticleRepositoryImpl implements ArticleRepository{
         boolean is = articleDTO.getPrestige().equals(prestige);
         return is;
     }
-
+//Metodo que lee el JSON
     private List<ArticleDTO> loadDataBase(){
         File file = null;
         try{
@@ -179,9 +180,26 @@ public class ArticleRepositoryImpl implements ArticleRepository{
 
         return articleDTOS;
     }
-
+//Metodo que modifica el JSON
     @Override
-    public boolean modifyStock(List<ArticleDTO> articles) throws FileNotFoundException {
+    public void modifyStock(ArticleDTO articles) throws FileNotFoundException, ArticleNotFoundException, StockOutOfBoundsException {
+        List<ArticleDTO> db = loadDataBase();
+
+            for(int j= 0; j<db.size();j++) {
+                if (getById(articles.getProductId()) != null) {
+                    if (db.get(j).getProductId() == articles.getProductId())
+                        if(db.get(j).getQuantity() != articles.getQuantity()){
+                            if(db.get(j).getQuantity()>articles.getQuantity()){
+                                db.get(j).setQuantity(articles.getQuantity());
+                            }
+                            else
+                                throw new StockOutOfBoundsException("El stock no es suficiente");
+                        }
+
+                }
+            }
+
+
         File file = null;
         try {
             file = ResourceUtils.getFile("classpath:dbProductos.json");
@@ -191,11 +209,11 @@ public class ArticleRepositoryImpl implements ArticleRepository{
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             if(articles!=null)
-                objectMapper.writeValue(file, articles);
-            return true;
+                objectMapper.writeValue(file, db);
+           // return true;
         }catch (Exception e){
             e.printStackTrace();
-            return false;
+           //return false;
         }
     }
 }

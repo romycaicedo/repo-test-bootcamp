@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "8f87e28a-0738-424f-8177-2999e17f6cd1",
+		"name": "DesafioSpring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/api/v1/articles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/articles/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"articles",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/v1/articles?category=Deportes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/articles?category=Indumentaria&freeShipping=false&minPrice=500&maxPrice=2.500&order=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"articles"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "Indumentaria"
+						},
+						{
+							"key": "freeShipping",
+							"value": "false"
+						},
+						{
+							"key": "minPrice",
+							"value": "500"
+						},
+						{
+							"key": "maxPrice",
+							"value": "2.500"
+						},
+						{
+							"key": "order",
+							"value": "0"
+						},
+						{
+							"key": "brand",
+							"value": "Adidas",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/v1/purchase-request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"articles\":\n    [\n        {\n            \"productId\":1,\n            \"name\":\"Desmalezadora\",\n            \"brand\":\"Makita\",\n            \"quantity\":1\n        },\n        {\n            \"productId\":5,\n            \"name\":\"Zapatillas Deportivas\",\n            \"brand\":\"Nike\",\n            \"quantity\":1\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/purchase-request",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"purchase-request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GeneralError",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/purchase-request",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"purchase-request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/v1/cart-request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/cart-request",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"cart-request"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
