@@ -54,6 +54,14 @@ public class ArticleController {
         error.setMessage(n.getMessage());
         return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(value = { Exception.class })
+    protected ResponseEntity<StatusDTO> handleUnknownException(Exception e) {
+        StatusDTO error= new StatusDTO();
+        error.setCode(500);
+        error.setMessage("Internal error, please contact API Spring Boot Challenge Admin");
+        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
 
 
 }
