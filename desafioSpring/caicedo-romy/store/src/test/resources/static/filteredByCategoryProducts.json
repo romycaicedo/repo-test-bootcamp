@@ -1,0 +1,32 @@
+[
+  {
+    "Producto": 1,
+    "Nombre": "Desmalezadora",
+    "Categoria": "Herramientas",
+    "Marca": "Makita",
+    "Precio": "$9.600",
+    "Cantidad": 5,
+    "Envio Gratis": "SI",
+    "Prestigio": "****"
+  },
+  {
+    "Producto": 2,
+    "Nombre": "Taladro",
+    "Categoria": "Herramientas",
+    "Marca": "Black & Decker",
+    "Precio": "$12.500",
+    "Cantidad": 7,
+    "Envio Gratis": "SI",
+    "Prestigio": "****"
+  },
+  {
+    "Producto": 3,
+    "Nombre": "Soldadora",
+    "Categoria": "Herramientas",
+    "Marca": "Black & Decker",
+    "Precio": "$7.215",
+    "Cantidad": 10,
+    "Envio Gratis": "SI",
+    "Prestigio": "***"
+  }
+]

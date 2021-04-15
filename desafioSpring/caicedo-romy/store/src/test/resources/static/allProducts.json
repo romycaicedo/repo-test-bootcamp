@@ -1,0 +1,42 @@
+[
+  {
+    "Producto": 1,
+    "Nombre": "Desmalezadora",
+    "Categoria": "Herramientas",
+    "Marca": "Makita",
+    "Precio": "$9.600",
+    "Cantidad": 5,
+    "Envio Gratis": "SI",
+    "Prestigio": "****"
+  },
+  {
+    "Producto": 5,
+    "Nombre": "Zapatillas Deportivas",
+    "Categoria": "Deportes",
+    "Marca": "Adidas",
+    "Precio": "$13.650",
+    "Cantidad": 6,
+    "Envio Gratis": "SI",
+    "Prestigio": "*****"
+  },
+  {
+    "Producto": 3,
+    "Nombre": "Soldadora",
+    "Categoria": "Herramientas",
+    "Marca": "Black & Decker",
+    "Precio": "$7.215",
+    "Cantidad": 10,
+    "Envio Gratis": "SI",
+    "Prestigio": "***"
+  },
+  {
+    "Producto": 4,
+    "Nombre": "Zapatillas Deportivas",
+    "Categoria": "Deportes",
+    "Marca": "Nike",
+    "Precio": "$14.000",
+    "Cantidad": 4,
+    "Envio Gratis": "SI",
+    "Prestigio": "*****"
+  }
+]
