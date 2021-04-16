@@ -1,0 +1,32 @@
+[
+    {
+        "hotelCode": "SE-0002",
+        "name": "Selina 2",
+        "city": "Bogota",
+        "roomType": "Doble",
+        "nightPrice": "5840",
+        "availableFrom": "23/01/2021",
+        "availableTo": "15/10/2021",
+        "reserved": false
+    },
+    {
+        "hotelCode": "SE-0001",
+        "name": "Selina",
+        "city": "Bogota",
+        "roomType": "Single",
+        "nightPrice": "3900",
+        "availableFrom": "23/01/2021",
+        "availableTo": "23/11/2021",
+        "reserved": false
+    },
+    {
+        "hotelCode": "EC-0003",
+        "name": "El Campin",
+        "city": "Bogota",
+        "roomType": "Triple",
+        "nightPrice": "7020",
+        "availableFrom": "15/02/2021",
+        "availableTo": "27/03/2021",
+        "reserved": false
+    }
+]

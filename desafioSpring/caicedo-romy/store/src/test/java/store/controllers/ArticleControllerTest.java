@@ -49,8 +49,8 @@ public class ArticleControllerTest {
     @InjectMocks
     private ArticleController articleController;
 
-    @MockBean
-    private ArticleService articleService;
+        @MockBean
+        private ArticleService articleService;
 
     public void setup(){
         initMocks(this);
