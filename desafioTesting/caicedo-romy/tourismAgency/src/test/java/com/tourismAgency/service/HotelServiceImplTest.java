@@ -7,6 +7,7 @@ import com.tourismAgency.dto.HotelDTO;
 import com.tourismAgency.repository.HotelRepository;
 import com.tourismAgency.repository.HotelRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -26,22 +27,22 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(HotelService.class)
+
 public class HotelServiceImplTest {
 
     private static List<HotelDTO> hotels;
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    @InjectMocks
+
     HotelServiceImpl hotelService;
 
-    @MockBean
+    @Mock
     private HotelRepository hotelRepository;
 
-
+    @BeforeEach
     public void setup(){
         initMocks(this);
-        hotelRepository = new HotelRepositoryImpl();
+        hotelService = new HotelServiceImpl(new HotelRepositoryImpl());
     }
 
     @Test
@@ -51,13 +52,10 @@ public class HotelServiceImplTest {
                 new TypeReference<>() {
                 });
         when(hotelRepository.getAll()).thenReturn(hotels);
-
-
         List<HotelDTO> responseHotels = hotelService.getHotels(params);
-
         //assert equals
         Assertions.assertEquals(responseHotels, hotels);
-        verify(hotelRepository,times(1)).getAll();
+
 
     }
 }

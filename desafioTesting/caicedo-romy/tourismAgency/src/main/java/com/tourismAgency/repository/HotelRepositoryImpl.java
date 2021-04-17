@@ -18,10 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -35,8 +32,64 @@ public class HotelRepositoryImpl implements HotelRepository {
         return  all;
     }
 
+    @Override
+    public boolean validateHotel(String hotelCode){
+        boolean exists = false;
+        List<HotelDTO> hotelDTOS = loadData();
+        for(HotelDTO dto: hotelDTOS){
+            if(dto.hotelCode.equals(hotelCode))
+                exists = true;
+                break;
+        }
+        return exists;
+    }
 
+    @Override
+    public boolean validateAvailavility(String hotelCode, String dateFrom, String dateTo){
+        boolean isAvailable = false;
+        List<HotelDTO> hotelDTOS = loadData();
+        for(HotelDTO dto: hotelDTOS){
+            if(dto.hotelCode.equals(hotelCode) && matchWithDates(dateFrom,dateTo,dto))
+                isAvailable = true;
+            break;
+        }
+        return isAvailable;
+    }
 
+    @Override
+    public boolean validateRooms(String hotelCode, String rooms){
+        boolean match = false;
+        List<HotelDTO> hotelDTOS = loadData();
+        for(HotelDTO dto: hotelDTOS){
+            if(dto.hotelCode.equals(hotelCode) && dto.roomType.equalsIgnoreCase(rooms))
+                match = true;
+            break;
+        }
+        return match;
+    }
+
+    @Override
+    public boolean validateDestination(String hotelCode,String destination){
+        boolean match = false;
+        List<HotelDTO> hotelDTOS = loadData();
+        for(HotelDTO dto: hotelDTOS){
+            if(dto.hotelCode.equals(hotelCode) && dto.city.equals(destination))
+                match = true;
+            break;
+        }
+        return match;
+    }
+
+    public long getNightPrice(String hotelCode){
+        long price = 0;
+        List<HotelDTO> hotelDTOS = loadData();
+        for(HotelDTO dto: hotelDTOS){
+            if(dto.hotelCode.equals(hotelCode) )
+                price = Long.parseLong(dto.nightPrice);
+            break;
+        }
+        return price;
+    }
 
 
     @Override
@@ -97,6 +150,7 @@ public class HotelRepositoryImpl implements HotelRepository {
         LocalDate localDate = LocalDate.parse(seq,formatter);
         return localDate;
     }
+
 
     private List<HotelDTO> loadData()  { File file = null;
         try{

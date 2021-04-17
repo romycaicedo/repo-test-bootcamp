@@ -3,6 +3,8 @@ package com.tourismAgency.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +24,7 @@ public class BookingHotelDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public String roomType;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public PeopleDTO people;
+    public List<UserDTO> people;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public PaymentDTO paymentMethod;
 }

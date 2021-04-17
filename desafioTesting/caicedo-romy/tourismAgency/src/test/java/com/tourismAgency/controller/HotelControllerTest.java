@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.tourismAgency.dto.HotelDTO;
 import com.tourismAgency.exceptions.InvalidDateException;
+import com.tourismAgency.repository.HotelRepositoryImpl;
 import com.tourismAgency.service.HotelService;
 import com.tourismAgency.service.HotelServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -56,7 +57,7 @@ public class HotelControllerTest {
 
     public  void setUp() throws IOException {
     initMocks(this);
-    hotelService = new HotelServiceImpl();
+    hotelService = new HotelServiceImpl(new HotelRepositoryImpl());
 
     }
     @Test

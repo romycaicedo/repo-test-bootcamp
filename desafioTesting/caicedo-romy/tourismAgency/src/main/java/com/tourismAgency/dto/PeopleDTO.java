@@ -9,5 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PeopleDTO {
-        public List<IdentificationDTO> people;
+        public List<UserDTO> people;
 }
