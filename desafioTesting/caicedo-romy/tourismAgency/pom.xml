@@ -154,7 +154,7 @@
 							<dataFile>target/jacoco.exec</dataFile>
 							<outputDirectory>target/site/jacoco</outputDirectory>
 							<excludes>
-							<exclude>src/main/java/com.tourismAgency/dto/*</exclude>
+							<exclude>com.tourismAgency.dto</exclude>
 						</excludes>
 						</configuration>
 					</execution>

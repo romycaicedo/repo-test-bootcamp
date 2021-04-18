@@ -5,7 +5,6 @@ import lombok.*;
 @Data
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
     public String dni;

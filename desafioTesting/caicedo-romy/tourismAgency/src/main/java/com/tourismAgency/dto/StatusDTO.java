@@ -5,7 +5,6 @@ import lombok.*;
 @Data
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class StatusDTO {
     public double code;

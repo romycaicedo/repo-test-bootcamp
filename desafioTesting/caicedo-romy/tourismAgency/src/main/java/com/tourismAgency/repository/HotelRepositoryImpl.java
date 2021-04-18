@@ -37,9 +37,9 @@ public class HotelRepositoryImpl implements HotelRepository {
         boolean exists = false;
         List<HotelDTO> hotelDTOS = loadData();
         for(HotelDTO dto: hotelDTOS){
-            if(dto.hotelCode.equals(hotelCode))
+            if(dto.hotelCode.equals(hotelCode)) {
                 exists = true;
-                break;
+            }
         }
         return exists;
     }
@@ -49,9 +49,9 @@ public class HotelRepositoryImpl implements HotelRepository {
         boolean isAvailable = false;
         List<HotelDTO> hotelDTOS = loadData();
         for(HotelDTO dto: hotelDTOS){
-            if(dto.hotelCode.equals(hotelCode) && matchWithDates(dateFrom,dateTo,dto))
+            if(dto.hotelCode.equals(hotelCode) && matchWithDates(dateFrom,dateTo,dto)) {
                 isAvailable = true;
-            break;
+            }
         }
         return isAvailable;
     }
@@ -61,9 +61,9 @@ public class HotelRepositoryImpl implements HotelRepository {
         boolean match = false;
         List<HotelDTO> hotelDTOS = loadData();
         for(HotelDTO dto: hotelDTOS){
-            if(dto.hotelCode.equals(hotelCode) && dto.roomType.equalsIgnoreCase(rooms))
+            if(dto.hotelCode.equals(hotelCode) && dto.roomType.equalsIgnoreCase(rooms)) {
                 match = true;
-            break;
+            }
         }
         return match;
     }
@@ -73,9 +73,9 @@ public class HotelRepositoryImpl implements HotelRepository {
         boolean match = false;
         List<HotelDTO> hotelDTOS = loadData();
         for(HotelDTO dto: hotelDTOS){
-            if(dto.hotelCode.equals(hotelCode) && dto.city.equals(destination))
+            if(dto.hotelCode.equals(hotelCode) && dto.city.equals(destination)) {
                 match = true;
-            break;
+            }
         }
         return match;
     }
@@ -85,9 +85,9 @@ public class HotelRepositoryImpl implements HotelRepository {
         long price = 0;
         List<HotelDTO> hotelDTOS = loadData();
         for(HotelDTO dto: hotelDTOS){
-            if(dto.hotelCode.equals(hotelCode) )
+            if(dto.hotelCode.equals(hotelCode) ) {
                 price = Long.parseLong(dto.nightPrice);
-            break;
+            }
         }
         return price;
     }

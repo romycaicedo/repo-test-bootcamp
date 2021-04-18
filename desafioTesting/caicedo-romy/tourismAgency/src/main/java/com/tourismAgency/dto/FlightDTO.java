@@ -6,29 +6,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 @Data
-@NoArgsConstructor
 @Getter
 @Setter
-public class BookingFlightDTO {
-
+@NoArgsConstructor
+public class FlightDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public String dateFrom;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public String dateTo;
+    public String flightNumber;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public String origin;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public String destination;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public String flightNumber;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public int seats;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String seatType;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public List<UserDTO> people;
+    public String price;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public PaymentDTO paymentMethod;
+    public String dateFrom;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String dateTo;
+
 }
