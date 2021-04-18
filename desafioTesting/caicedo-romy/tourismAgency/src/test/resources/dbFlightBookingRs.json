@@ -1,0 +1,35 @@
+{
+  "userName": "seba_gonzalez@unmail.com",
+  "amount": 86400.0,
+  "interest": 10.0,
+  "total": 95040.0,
+  "flightReservation": {
+    "dateFrom": "10/02/2021",
+    "dateTo": "20/02/2021",
+    "origin": "Puerto Iguazu",
+    "destination": "Bogota",
+    "flightNumber": "PIBA-1420",
+    "seats": 2,
+    "seatType": "BUSINESS",
+    "people": [
+      {
+        "dni": "12345678",
+        "name": "Pepito",
+        "lastName": "Gomez",
+        "birthDate": "10/11/1982",
+        "mail": "pepitogomez@gmail.com"
+      },
+      {
+        "dni": "13345678",
+        "name": "Fulanito",
+        "lastName": "Gomez",
+        "birthDate": "10/11/1983",
+        "mail": "fulanitogomez@gmail.com"
+      }
+    ]
+  },
+  "status": {
+    "code": 200.0,
+    "message": "Successfull Flight Reservation"
+  }
+}

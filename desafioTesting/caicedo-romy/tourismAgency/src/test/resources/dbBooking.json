@@ -1,8 +1,8 @@
 {
     "userName": "seba_gonzalez@unmail.com",
-    "amount": 56700.0,
-    "interest": 0.1,
-    "total": 62370.0,
+    "amount": 113400.0,
+    "interest": 10.0,
+    "total": 124740.0,
     "bookingHotelDTO": {
         "dateFrom": "11/02/2021",
         "dateTo": "20/02/2021",

@@ -1,0 +1,11 @@
+[
+  {
+    "flightNumber": "PIBA-1421",
+    "origin": "Puerto Iguazu",
+    "destination": "Bogota",
+    "seatType": "Economy",
+    "price": "25735",
+    "dateFrom": "10/02/2021",
+    "dateTo": "21/02/2021"
+  }
+]

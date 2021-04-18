@@ -15,12 +15,12 @@ import java.util.Map;
 
 @RestController
 @NoArgsConstructor
-public class FligthController {
+public class FlightController {
 
     @Autowired
     private FlightService flightService;
 
-    public FligthController(FlightService flightService){
+    public FlightController(FlightService flightService){
         this.flightService = flightService;
     }
 
@@ -80,6 +80,39 @@ public class FligthController {
 
     @ExceptionHandler(FlightNotFoundException.class)
     public ResponseEntity flightNotFound(FlightNotFoundException n)
+    {
+        StatusDTO error= new StatusDTO();
+        error.setCode(400);
+        error.setMessage(n.getMessage());
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(DuesException.class)
+    public ResponseEntity invalidDues(DuesException n)
+    {
+        StatusDTO error= new StatusDTO();
+        error.setCode(400);
+        error.setMessage(n.getMessage());
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidEmailException.class)
+    public ResponseEntity invalidEmail(InvalidEmailException n)
+    {
+        StatusDTO error= new StatusDTO();
+        error.setCode(400);
+        error.setMessage(n.getMessage());
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(PeopleAmountException.class)
+    public ResponseEntity invalidPeople(PeopleAmountException n)
+    {
+        StatusDTO error= new StatusDTO();
+        error.setCode(400);
+        error.setMessage(n.getMessage());
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity invalidUser(UserNotFoundException n)
     {
         StatusDTO error= new StatusDTO();
         error.setCode(400);

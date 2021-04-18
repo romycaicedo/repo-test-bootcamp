@@ -97,7 +97,7 @@ public class FlightRepositoryImpl implements FlightRepository {
         }
 
         if (params.containsKey("origin")) {
-            validateDestination = getByDestination(params.get("origin"));
+            validateDestination = getByOrigin(params.get("origin"));
             if(validateDestination.size()== 0){
                 throw new DestinationNotFoundException("The selected origin does not exist");
             }
