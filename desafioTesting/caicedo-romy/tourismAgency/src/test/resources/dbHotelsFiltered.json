@@ -1,0 +1,22 @@
+[
+    {
+        "hotelCode": "CH-0002",
+        "name": "Cataratas Hotel",
+        "city": "Puerto Iguazu",
+        "roomType": "Double",
+        "nightPrice": "6300",
+        "availableFrom": "10/02/2021",
+        "availableTo": "20/03/2021",
+        "reserved": false
+    },
+    {
+        "hotelCode": "CH-0003",
+        "name": "Cataratas Hotel 2",
+        "city": "Puerto Iguazu",
+        "roomType": "Triple",
+        "nightPrice": "8200",
+        "availableFrom": "10/02/2021",
+        "availableTo": "23/03/2021",
+        "reserved": false
+    }
+]
