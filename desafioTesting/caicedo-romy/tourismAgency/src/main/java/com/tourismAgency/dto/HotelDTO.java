@@ -12,7 +12,6 @@ import java.util.Date;
 @Data
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class HotelDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)

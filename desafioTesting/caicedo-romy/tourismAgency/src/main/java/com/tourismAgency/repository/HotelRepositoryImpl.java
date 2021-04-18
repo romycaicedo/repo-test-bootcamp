@@ -80,6 +80,7 @@ public class HotelRepositoryImpl implements HotelRepository {
         return match;
     }
 
+    @Override
     public long getNightPrice(String hotelCode){
         long price = 0;
         List<HotelDTO> hotelDTOS = loadData();

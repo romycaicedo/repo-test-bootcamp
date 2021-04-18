@@ -25,11 +25,14 @@ public class HotelServiceImpl implements HotelService {
     @Autowired
     private HotelRepository hotelRepository;
 
-    public HotelServiceImpl(HotelRepository repository){
-        this.hotelRepository = repository;
-    }
+
     @Autowired
     private UserRepository userRepository;
+
+    public HotelServiceImpl(HotelRepository repository, UserRepository userRepository) {
+        this.hotelRepository = repository;
+        this.userRepository = userRepository;
+    }
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     DateValidator validator = new DateValidatorImpl(formatter);
@@ -64,8 +67,8 @@ public class HotelServiceImpl implements HotelService {
         if (userRepository.userExist(booking.getUserName())) {
             if (validator.isValid(booking.booking.dateFrom) && validator.isValid(booking.booking.dateTo)) {
                 validateDates(booking.booking.dateFrom, booking.booking.dateTo);
-                if (hotelRepository.validateAvailavility(booking.booking.hotelCode, booking.booking.dateFrom, booking.booking.dateTo)) {
-                    if (hotelRepository.validateHotel(booking.booking.hotelCode)) {
+                if (hotelRepository.validateHotel(booking.booking.hotelCode)) {
+                    if (hotelRepository.validateAvailavility(booking.booking.hotelCode, booking.booking.dateFrom, booking.booking.dateTo)) {
                         if (booking.booking.peopleAmount == booking.booking.people.size()) {
                             if (hotelRepository.validateRooms(booking.booking.hotelCode, booking.booking.roomType)) {
                                 if (hotelRepository.validateDestination(booking.booking.hotelCode, booking.booking.destination)) {
@@ -94,10 +97,13 @@ public class HotelServiceImpl implements HotelService {
                                 throw new HotelNotFoundException("Hotel requested and rooms don't match");
                         } else
                             throw new PeopleAmountException("People Amount and people data mismatch");
+
                     } else
-                        throw new HotelNotFoundException("Hotel not found");
+                        throw new InvalidDateException("Hotel is not available in selected dates");
+
                 } else
-                    throw new InvalidDateException("Hotel is not available in selected dates");
+                    throw new HotelNotFoundException("Hotel not found");
+
             } else
                 throw new InvalidDateException("Date format must be dd/mm/yyyy");
         } else
@@ -125,6 +131,7 @@ public class HotelServiceImpl implements HotelService {
             throw new InvalidEmailException("Invalid email format");
         }
     }
+
 
     private Map<String, Double> paymentCalculation(PaymentDTO payment, long days, long nigthPrice) throws DuesException {
         Map<String, Double> paymentInfo = new HashMap<>();
@@ -164,13 +171,14 @@ public class HotelServiceImpl implements HotelService {
                 double total = Double.parseDouble(valor) + totalInterest;
                 paymentInfo.put("amount", Double.parseDouble(valor));
                 paymentInfo.put("total", total);
-            }else
+            } else
                 throw new DuesException("Max dues allowed are 9, please check again");
 
         } else throw new DuesException("Card Type not Allowed");
 
         return paymentInfo;
     }
+
 
     private long calculateNights(String dateFrom, String dateTo) {
         LocalDate dateInit = convertDate(dateFrom);

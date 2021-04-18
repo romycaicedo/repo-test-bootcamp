@@ -6,6 +6,7 @@ import com.tourismAgency.dto.StatusDTO;
 import com.tourismAgency.exceptions.*;
 import com.tourismAgency.service.HotelService;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,18 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@NoArgsConstructor
 public class HotelController {
+
+
 
     @Autowired
     private HotelService hotelService;
+
+    public HotelController(HotelService hotelService){
+        this.hotelService = hotelService;
+
+    }
 
     @GetMapping("/api/v1/hotels")
     public ResponseEntity getHotels(@RequestParam Map<String,String> params) throws InvalidDateException, DataNotFoundException, FiltersException, DestinationNotFoundException {
@@ -32,7 +41,7 @@ public class HotelController {
     }
 
     @ExceptionHandler(value = { Exception.class })
-    protected ResponseEntity<StatusDTO> handleUnknownException(Exception e) {
+    protected ResponseEntity<StatusDTO> handleUnknownException() {
         StatusDTO error= new StatusDTO();
         error.setCode(500);
         error.setMessage("Internal error, please contact API Spring Boot Challenge Admin");
@@ -69,50 +78,50 @@ public class HotelController {
     public ResponseEntity invalidDestination(DestinationNotFoundException n)
     {
         StatusDTO error= new StatusDTO();
-        error.setCode(500);
+        error.setCode(400);
         error.setMessage(n.getMessage());
-        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(DuesException.class)
     public ResponseEntity invalidDues(DuesException n)
     {
         StatusDTO error= new StatusDTO();
-        error.setCode(500);
+        error.setCode(400);
         error.setMessage(n.getMessage());
-        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(HotelNotFoundException.class)
     public ResponseEntity invalidHotel(HotelNotFoundException n)
     {
         StatusDTO error= new StatusDTO();
-        error.setCode(500);
+        error.setCode(400);
         error.setMessage(n.getMessage());
-        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(InvalidEmailException.class)
     public ResponseEntity invalidEmail(InvalidEmailException n)
     {
         StatusDTO error= new StatusDTO();
-        error.setCode(500);
+        error.setCode(400);
         error.setMessage(n.getMessage());
-        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(PeopleAmountException.class)
     public ResponseEntity invalidPeople(PeopleAmountException n)
     {
         StatusDTO error= new StatusDTO();
-        error.setCode(500);
+        error.setCode(400);
         error.setMessage(n.getMessage());
-        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity invalidUser(UserNotFoundException n)
     {
         StatusDTO error= new StatusDTO();
-        error.setCode(500);
+        error.setCode(400);
         error.setMessage(n.getMessage());
-        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
 
 

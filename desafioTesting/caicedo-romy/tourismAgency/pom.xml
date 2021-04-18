@@ -99,26 +99,50 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.2.201409121644</version>
-				<configuration>
-					<outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
-					<excludes>
-						<exclude>**/*Config.*</exclude>
-						<exclude>**/*Dev.*</exclude>
-					</excludes>
-				</configuration>
+				<version>0.8.5</version>
 				<executions>
 					<execution>
+						<id>default-prepare-agent</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
 					<execution>
-						<id>report</id>
+						<id>default-report</id>
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
+					</execution>
+					<execution>
+						<id>default-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>CLASS</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>0.00</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+					<execution>
+						<id>pre-unit-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<destFile>target/jacoco.exec</destFile>
+							<propertyName>argLine</propertyName>
+						</configuration>
 					</execution>
 					<execution>
 						<id>post-unit-test</id>
@@ -126,6 +150,13 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
+						<configuration>
+							<dataFile>target/jacoco.exec</dataFile>
+							<outputDirectory>target/site/jacoco</outputDirectory>
+							<excludes>
+							<exclude>src/main/java/com.tourismAgency/dto/*</exclude>
+						</excludes>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
