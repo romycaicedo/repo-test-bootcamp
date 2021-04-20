@@ -36,7 +36,7 @@ public class HotelServiceImpl implements HotelService {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     DateValidator validator = new DateValidatorImpl(formatter);
-
+    //Method that evaluates params size and based in result redirect to methods in repository, either to bring all or filtered query result.
     @Override
     public List<HotelDTO> getHotels(Map<String, String> params) throws InvalidDateException, FiltersException, DataNotFoundException, DestinationNotFoundException {
         List<HotelDTO> hoteles = new ArrayList<>();
@@ -57,6 +57,7 @@ public class HotelServiceImpl implements HotelService {
         return hoteles;
     }
 
+    //Method to make a hotel booking, validates the fields and if there is one incorrect throws the designed exception, if everything goes ok, return booking response
     public HotelBookingResponseDTO booking(HotelBookingRequestDTO booking) throws UserNotFoundException, InvalidDateException, HotelNotFoundException, PeopleAmountException, DestinationNotFoundException, InvalidEmailException, DuesException {
         HotelBookingResponseDTO response = new HotelBookingResponseDTO();
         BookingHotelDTO bookingResp = new BookingHotelDTO();
@@ -111,20 +112,22 @@ public class HotelServiceImpl implements HotelService {
         return response;
     }
 
+
+//Method to convert dates from String to LocalDate
     private LocalDate convertDate(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         CharSequence seq = date;
         LocalDate localDate = LocalDate.parse(seq, formatter);
         return localDate;
     }
-
+//Method to validate that Dates are in correct order
     private void validateDates(String dateFrom, String dateTo) throws InvalidDateException {
         if (!convertDate(dateFrom).isBefore(convertDate(dateTo))) {
             throw new InvalidDateException("Start date must be less than the end date");
 
         }
     }
-
+//Method to validate email format
     private void validateEmail(String email) throws InvalidEmailException {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         if (!email.matches(regex)) {
@@ -132,7 +135,7 @@ public class HotelServiceImpl implements HotelService {
         }
     }
 
-
+// Method to calculate payment of the booking
     private Map<String, Double> paymentCalculation(PaymentDTO payment, long days, long nigthPrice, int people) throws DuesException {
         Map<String, Double> paymentInfo = new HashMap<>();
         long amount = nigthPrice * days * people;
@@ -179,7 +182,7 @@ public class HotelServiceImpl implements HotelService {
         return paymentInfo;
     }
 
-
+// Method to calculate the amount of days of stay
     private long calculateNights(String dateFrom, String dateTo) {
         LocalDate dateInit = convertDate(dateFrom);
         LocalDate dateEnd = convertDate(dateTo);
@@ -188,6 +191,7 @@ public class HotelServiceImpl implements HotelService {
         return days;
     }
 
+    // Method to validate that amount of people is correct compared with roomType
     private void validateVaccancy(String roomType, int amount) throws PeopleAmountException {
         if (roomType.equalsIgnoreCase("Single")) {
             if (amount != 1) {

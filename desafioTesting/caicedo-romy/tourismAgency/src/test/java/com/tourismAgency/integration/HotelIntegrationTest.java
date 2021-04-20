@@ -3,6 +3,9 @@ package com.tourismAgency.integration;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tourismAgency.controller.HotelController;
+import com.tourismAgency.dto.FlightReservationResponseDTO;
+import com.tourismAgency.dto.HotelBookingRequestDTO;
+import com.tourismAgency.dto.HotelBookingResponseDTO;
 import com.tourismAgency.dto.HotelDTO;
 import com.tourismAgency.repository.HotelRepositoryImpl;
 import com.tourismAgency.repository.UserRepositoryImpl;
@@ -35,6 +38,7 @@ public class HotelIntegrationTest {
 
 
         private static List<HotelDTO> hotels;
+        private static HotelBookingRequestDTO bookingRequest;
         private static final ObjectMapper objectMapper = new ObjectMapper();
         @Autowired
         private MockMvc mockMvc;
@@ -94,6 +98,27 @@ public class HotelIntegrationTest {
             //assert equals
             Assertions.assertEquals(responseHotels, hotels);
         }
+
+    @Test
+    @DisplayName("Should get a booking successfully")
+    void getBooking() throws Exception {
+        bookingRequest = objectMapper.readValue(new File("src/test/resources/dbBookingRq.json"),
+                new TypeReference<>() {
+                });
+        HotelBookingResponseDTO bookingResponse = objectMapper.readValue(new File("src/test/resources/dbBooking.json"),
+                new TypeReference<>() {
+                });
+
+        when(hotelService.booking(bookingRequest)).thenReturn(bookingResponse);
+        final String jsonContent = objectMapper.writeValueAsString(bookingRequest);
+
+        MvcResult mvcResult= mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/booking").contentType(MediaType.APPLICATION_JSON).content(jsonContent).accept(MediaType.ALL))
+                .andExpect(status().isOk()).andReturn();
+
+        HotelBookingResponseDTO mvcResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {});
+
+        Assertions.assertEquals(bookingResponse, mvcResponse);
+    }
 
 
     }

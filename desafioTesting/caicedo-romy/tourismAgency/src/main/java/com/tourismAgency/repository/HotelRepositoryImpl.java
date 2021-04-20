@@ -25,13 +25,13 @@ import java.util.stream.Collectors;
 @Repository
 public class HotelRepositoryImpl implements HotelRepository {
 
-
+    // Method to get all hotels
     @Override
     public List<HotelDTO> getAll() {
         List<HotelDTO> all = loadData();
         return  all;
     }
-
+// Validate if hotel exist
     @Override
     public boolean validateHotel(String hotelCode){
         boolean exists = false;
@@ -43,7 +43,7 @@ public class HotelRepositoryImpl implements HotelRepository {
         }
         return exists;
     }
-
+// Validate if the selected hotel is available is available for the dates selected
     @Override
     public boolean validateAvailavility(String hotelCode, String dateFrom, String dateTo){
         boolean isAvailable = false;
@@ -55,7 +55,7 @@ public class HotelRepositoryImpl implements HotelRepository {
         }
         return isAvailable;
     }
-
+// Validate if rooms are according to Hotel and rooms registered in repository
     @Override
     public boolean validateRooms(String hotelCode, String rooms){
         boolean match = false;
@@ -67,7 +67,7 @@ public class HotelRepositoryImpl implements HotelRepository {
         }
         return match;
     }
-
+// Validate if hotel city is according with destination selected
     @Override
     public boolean validateDestination(String hotelCode,String destination){
         boolean match = false;
@@ -79,7 +79,7 @@ public class HotelRepositoryImpl implements HotelRepository {
         }
         return match;
     }
-
+// Get night price with hotel code
     @Override
     public long getNightPrice(String hotelCode){
         long price = 0;
@@ -92,7 +92,7 @@ public class HotelRepositoryImpl implements HotelRepository {
         return price;
     }
 
-
+// Method to get hotels by filters selected
     @Override
     public List<HotelDTO> getByFilters(Map<String,String> params) throws DestinationNotFoundException {
         List<HotelDTO> hotelDTOS = loadData();
@@ -121,16 +121,17 @@ public class HotelRepositoryImpl implements HotelRepository {
         return  total;
 
     }
-
+// Method to check if destination is according to hotel city
     private boolean matchwithDestination(String destination, HotelDTO hotelDTO){
         boolean is = hotelDTO.getCity().equals(destination);
         return is;
     }
+    // Method to get hotels with specific destination
     private List<HotelDTO> getByDestination(String destination) {
         List<HotelDTO> hotels = loadData();
         return hotels.stream().filter(hotelDTO -> matchwithDestination(destination,hotelDTO)).collect(Collectors.toList());
     }
-
+// Check if dates are correct according to hotel selected
     private boolean matchWithDates(String dateFrom, String dateTo, HotelDTO hotelDTO) {
         boolean is;
         if(convertDate(hotelDTO.getAvailableFrom()).isBefore(convertDate(dateFrom)) || convertDate(hotelDTO.getAvailableFrom()).isEqual(convertDate(dateFrom)) && convertDate(hotelDTO.getAvailableFrom()).isAfter(convertDate(dateTo))){
@@ -145,6 +146,7 @@ public class HotelRepositoryImpl implements HotelRepository {
             is = false;
         return is;
     }
+    //Method to convert date from String to LocalDate
     private LocalDate convertDate(String date)  {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         CharSequence seq = date;
@@ -152,7 +154,7 @@ public class HotelRepositoryImpl implements HotelRepository {
         return localDate;
     }
 
-
+// Method that read JSON with all hotels
     private List<HotelDTO> loadData()  { File file = null;
         try{
             file = ResourceUtils.getFile("classpath:dbHotels.json");

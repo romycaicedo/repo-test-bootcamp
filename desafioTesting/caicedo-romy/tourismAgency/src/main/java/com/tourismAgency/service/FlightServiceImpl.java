@@ -31,6 +31,7 @@ public class FlightServiceImpl implements FlightService{
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     DateValidator validator = new DateValidatorImpl(formatter);
 
+    //Method that evaluates params size and based in result redirect to methods in repository, either to bring all or filtered query result.
     @Override
     public List<FlightDTO> getAll(Map<String, String> params) throws InvalidDateException, DestinationNotFoundException, FiltersException, DataNotFoundException {
         List<FlightDTO> flights = new ArrayList<>();
@@ -50,7 +51,7 @@ public class FlightServiceImpl implements FlightService{
         return flights;
 
     }
-
+    //Method to make a flight booking, validates the fields and if there is one incorrect throws the designed exception, if everything goes ok, return booking response
     public FlightReservationResponseDTO booking(FlightReservationRequestDTO booking) throws UserNotFoundException, InvalidDateException, FlightNotFoundException, PeopleAmountException, DestinationNotFoundException, InvalidEmailException, DuesException {
         FlightReservationResponseDTO response = new FlightReservationResponseDTO();
         BookingFlightDTO bookingResp = new BookingFlightDTO();
@@ -103,27 +104,28 @@ public class FlightServiceImpl implements FlightService{
             throw new UserNotFoundException("Invalid User");
         return response;
     }
-
+    //Method to convert dates from String to LocalDate
     private LocalDate convertDate(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         CharSequence seq = date;
         LocalDate localDate = LocalDate.parse(seq, formatter);
         return localDate;
     }
-
+    //Method to validate that Dates are in correct order
     private void validateDates(String dateFrom, String dateTo) throws InvalidDateException {
         if (!convertDate(dateFrom).isBefore(convertDate(dateTo))) {
             throw new InvalidDateException("Start date must be less than the end date");
 
         }
     }
+    //Method to validate email format
     private void validateEmail(String email) throws InvalidEmailException {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         if (!email.matches(regex)) {
             throw new InvalidEmailException("Invalid email format");
         }
     }
-
+    // Method to calculate payment of the booking
     private Map<String, Double> paymentCalculation(PaymentDTO payment, long price, int seats) throws DuesException {
         Map<String, Double> paymentInfo = new HashMap<>();
         long amount = seats*price;

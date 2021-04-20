@@ -22,12 +22,13 @@ import java.util.stream.Collectors;
 @Repository
 public class FlightRepositoryImpl implements FlightRepository {
 
+    // Method to get all flights
     @Override
     public List<FlightDTO> getAll(){
         List<FlightDTO> flights = loadData();
         return flights;
     }
-
+//Method to check if requested seatType is correct comparing to Flights repo
     public boolean matchWithSeatType(String seatType, String flightNumber){
         boolean match = false;
         List<FlightDTO> flightDTOS = loadData();
@@ -37,7 +38,7 @@ public class FlightRepositoryImpl implements FlightRepository {
         }
         return match;
     }
-
+// Methos to check if flightNumber exist
     public boolean matchWithFlightNumber(String flightNumber){
         boolean match = false;
         List<FlightDTO> flightDTOS = loadData();
@@ -50,7 +51,7 @@ public class FlightRepositoryImpl implements FlightRepository {
         return match;
 
     }
-
+// Validate availability of a flight
     public boolean validateAvailability(String flightNumber, String dateFrom, String dateTo){
         boolean isAvailable = false;
         List<FlightDTO> flightDTOS = loadData();
@@ -61,7 +62,7 @@ public class FlightRepositoryImpl implements FlightRepository {
         }
         return isAvailable;
     }
-
+// Method to check if destination and origin are correct according to flightNumber.
     @Override
     public boolean validateDestination(String flightNumber,String destination, String origin){
         boolean match = false;
@@ -73,7 +74,7 @@ public class FlightRepositoryImpl implements FlightRepository {
         }
         return match;
     }
-
+// Method that get the price of the flight
     @Override
     public long getPrice(String flightNumber){
         long price = 0;
@@ -85,7 +86,7 @@ public class FlightRepositoryImpl implements FlightRepository {
         }
         return price;
     }
-
+// Get flights by filters selected
     public List<FlightDTO> getByFilters(Map<String,String> params) throws DestinationNotFoundException, FiltersException {
         List<FlightDTO> flightDTOS = loadData();
         List<FlightDTO> total = new ArrayList<>();
@@ -125,7 +126,7 @@ public class FlightRepositoryImpl implements FlightRepository {
         return  total;
 
     }
-
+// Match if dates selected are the same as registered and if are in correct order
     private boolean matchWithDates(String dateFrom, String dateTo, FlightDTO flightDTO) {
         boolean is;
         if(convertDate(dateFrom).equals(convertDate(flightDTO.getDateFrom())) && convertDate(dateFrom).isBefore(convertDate(flightDTO.getDateTo()))){
@@ -140,34 +141,34 @@ public class FlightRepositoryImpl implements FlightRepository {
             is = false;
         return is;
     }
-
+// Method to convert date from String to LocalDate.
     private LocalDate convertDate(String date)  {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         CharSequence seq = date;
         LocalDate localDate = LocalDate.parse(seq,formatter);
         return localDate;
     }
+    // Get flights by specific destination
     private List<FlightDTO> getByDestination(String destination) {
         List<FlightDTO> flights = loadData();
         return flights.stream().filter(flightDTO -> matchWithDestination(destination,flightDTO)).collect(Collectors.toList());
     }
+    //Check if flight destination and destiantion selected match
     private boolean matchWithDestination(String destination, FlightDTO flightDTO){
         boolean is = flightDTO.getDestination().equals(destination);
         return is;
     }
-
+    //Check if flight origin and destiantion selected match
     private boolean matchWithOrigin(String origin, FlightDTO flightDTO){
         boolean is = flightDTO.getOrigin().equals(origin);
         return is;
     }
-
+    // Get flights by specific origin
     private List<FlightDTO> getByOrigin(String origin){
         List<FlightDTO> flights = loadData();
         return flights.stream().filter(flightDTO -> matchWithOrigin(origin,flightDTO)).collect(Collectors.toList());
     }
-
-
-
+    // Load flights data form JSON
     private List<FlightDTO> loadData()  { File file = null;
         try{
             file = ResourceUtils.getFile("classpath:dbFlights.json");

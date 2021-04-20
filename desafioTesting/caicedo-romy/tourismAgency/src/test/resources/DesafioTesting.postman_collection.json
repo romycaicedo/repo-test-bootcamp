@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "615afa35-ae31-4bf9-8e6c-5313f1af6509",
+		"name": "DesafioTesting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "US0001",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/hotels",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"hotels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US0002",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/hotels?dateFrom=23/02/2021&dateTo=25/02/2021&destination=Puerto Iguazu",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"hotels"
+					],
+					"query": [
+						{
+							"key": "dateFrom",
+							"value": "23/02/2021"
+						},
+						{
+							"key": "dateTo",
+							"value": "25/02/2021"
+						},
+						{
+							"key": "destination",
+							"value": "Puerto Iguazu"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US0003",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userName\" : \"seba_gonzalez@unmail.com\",\n    \"booking\" : {\n        \"dateFrom\" : \"11/02/2021\",\n        \"dateTo\" : \"20/02/2021\",\n        \"destination\" : \"Puerto Iguazu\",\n        \"hotelCode\" : \"CH-0002\",\n        \"peopleAmount\" : 2,\n        \"roomType\" : \"DOUBLE\",\n        \"people\" : [\n            {\n                \"dni\" : \"12345678\",\n                \"name\" : \"Pepito\",\n                \"lastName\" : \"Gomez\",\n                \"birthDate\" : \"10/11/1982\",\n                \"mail\" : \"pepitogomez@gmail.com\"\n            },\n             {\n                \"dni\" : \"13345678\",\n                \"name\" : \"Fulanito\",\n                \"lastName\" : \"Gomez\",\n                \"birthDate\" : \"10/11/1983\",\n                \"mail\" : \"fulanitogomez@gmail.com\"\n            }\n        ],\n        \"paymentMethod\" : {\n            \"type\" : \"CREDIT\",\n            \"number\" : \"1234-1234-1234-1234\",\n            \"dues\" : 6\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/booking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US0004",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/flights",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"flights"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US0005",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/flights?dateFrom=10/02/2021&dateTo=21/02/2021&origin=Puerto Iguazu&destination=Bogota",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"flights"
+					],
+					"query": [
+						{
+							"key": "dateFrom",
+							"value": "10/02/2021"
+						},
+						{
+							"key": "dateTo",
+							"value": "21/02/2021"
+						},
+						{
+							"key": "origin",
+							"value": "Puerto Iguazu"
+						},
+						{
+							"key": "destination",
+							"value": "Bogota"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US0006",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userName\" : \"seba_gonzalez@unmail.com\",\n    \"flightReservation\" : {\n        \"dateFrom\" : \"10/02/2021\",\n        \"dateTo\" : \"20/02/2021\",\n        \"origin\" : \"Puerto Iguazu\",\n        \"destination\" : \"Bogota\",\n        \"flightNumber\" : \"PIBA-1420\",\n        \"seats\" : 2,\n        \"seatType\" : \"BUSINESS\",\n        \"people\" : [\n            {\n                \"dni\" : \"12345678\",\n                \"name\" : \"Pepito\",\n                \"lastName\" : \"Gomez\",\n                \"birthDate\" : \"10/11/1982\",\n                \"mail\" : \"pepitogomez@gmail.com\"\n            },\n             {\n                \"dni\" : \"13345678\",\n                \"name\" : \"Fulanito\",\n                \"lastName\" : \"Gomez\",\n                \"birthDate\" : \"10/11/1983\",\n                \"mail\" : \"fulanitogomez@gmail.com\"\n            }\n        ],\n        \"paymentMethod\" : {\n            \"type\" : \"CREDIT\",\n            \"number\" : \"1234-1234-1234-1234\",\n            \"dues\" : 6\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/flight-reservation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"flight-reservation"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

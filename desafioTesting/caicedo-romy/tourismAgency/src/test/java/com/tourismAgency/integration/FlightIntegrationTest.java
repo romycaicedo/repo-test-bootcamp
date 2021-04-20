@@ -3,7 +3,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tourismAgency.controller.FlightController;
 import com.tourismAgency.dto.FlightDTO;
+import com.tourismAgency.dto.FlightReservationRequestDTO;
+import com.tourismAgency.dto.FlightReservationResponseDTO;
 import com.tourismAgency.dto.HotelDTO;
+import com.tourismAgency.exceptions.*;
 import com.tourismAgency.repository.FlightRepositoryImpl;
 import com.tourismAgency.repository.UserRepositoryImpl;
 import com.tourismAgency.service.FlightService;
@@ -34,6 +37,7 @@ public class FlightIntegrationTest {
 
 
     private static List<FlightDTO> flights;
+    private static FlightReservationRequestDTO bookingRequest;
     private static final ObjectMapper objectMapper = new ObjectMapper();
         @Autowired
         private MockMvc mockMvc;
@@ -93,6 +97,27 @@ public class FlightIntegrationTest {
                     });
             //assert equals
             Assertions.assertEquals(responseFlights, flights);
+        }
+
+        @Test
+        @DisplayName("Should get a booking successfully")
+        void getBooking() throws Exception {
+            bookingRequest = objectMapper.readValue(new File("src/test/resources/dbFlightBookingRq.json"),
+                    new TypeReference<>() {
+                    });
+            FlightReservationResponseDTO bookingResponse = objectMapper.readValue(new File("src/test/resources/dbFlightBookingRs.json"),
+                    new TypeReference<>() {
+                    });
+
+            when(flightService.booking(bookingRequest)).thenReturn(bookingResponse);
+            final String jsonContent = objectMapper.writeValueAsString(bookingRequest);
+
+            MvcResult mvcResult= mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/flight-reservation").contentType(MediaType.APPLICATION_JSON).content(jsonContent).accept(MediaType.ALL))
+                    .andExpect(status().isOk()).andReturn();
+
+            FlightReservationResponseDTO mvcResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {});
+
+            Assertions.assertEquals(bookingResponse, mvcResponse);
         }
 
 

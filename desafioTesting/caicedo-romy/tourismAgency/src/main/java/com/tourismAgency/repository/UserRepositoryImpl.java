@@ -13,7 +13,7 @@ import java.util.List;
 public class UserRepositoryImpl implements UserRepository{
 
 
-
+    // Method to check if user exist
     @Override
     public boolean userExist(String user){
         boolean exist = false;
