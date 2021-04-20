@@ -33,9 +33,9 @@ open target/site/jacoco/index.html
 Last command will open the report in a web browser.
 
 But just in case i will leave you screenshot of the tests 😉
-![Test InteliJJ](/images/IntelijjTest.png)
+![Test InteliJJ](/tourismAgency/images/IntelijjTest.png)
 
-![Test Jacoco](/images/JacocoTest.png)
+![Test Jacoco](/tourismAgency/images/JacocoTest.png)
 
 
 
